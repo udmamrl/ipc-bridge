@@ -12,6 +12,10 @@ classdef ipc_ros < handle
             [a, p] = system(sprintf('rospack find %s', package_));
             addpath(strcat(p, '/bin'));
 
+            if exist(strcat(p, '/ipc/bin')) == 7
+                addpath(strcat(p, '/ipc/bin'));
+            end
+
             obj.bridge = str2func(type_);
             try
                 msg = obj.bridge('empty');
@@ -76,7 +80,7 @@ classdef ipc_ros < handle
         end
 
         function msg = empty(obj)
-            obj.bridge('empty');
+            msg = obj.bridge('empty');
         end
 
         function send(obj, msg)

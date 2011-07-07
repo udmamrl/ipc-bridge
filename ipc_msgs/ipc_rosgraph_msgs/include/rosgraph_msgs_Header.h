@@ -20,7 +20,7 @@ namespace ipc_bridge_matlab
 
       if (msg.frame_id == 0)
         {
-          char buf[1] = "";
+          char buf[1] = {'\0'};
           mxSetField(out, 0, "frame_id", mxCreateString(buf));
         }
       else
@@ -52,6 +52,11 @@ namespace ipc_bridge_matlab
         {
           msg.frame_id = new char[strlen(buf) + 1];
           strcpy(msg.frame_id, buf);
+        }
+      else
+        {
+          msg.frame_id = new char[1];
+          msg.frame_id[0] = '\0';
         }
 
       return SUCCESS;
