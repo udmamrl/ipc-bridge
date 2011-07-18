@@ -8,16 +8,20 @@ struct rosgraph_msgs_Header
   double stamp;
   string frame_id<>;
 %{
-  rosgraph_msgs_Header() : seq(0), stamp(0)
-  {
-    frame_id = new char[1];
-    frame_id[0] = '\0';
-  }
+  rosgraph_msgs_Header() : seq(0), stamp(0), frame_id(0) {}
   rosgraph_msgs_Header(const rosgraph_msgs_Header& msg) :
     seq(msg.seq), stamp(msg.stamp)
   {
-    frame_id = new char[strlen(msg.frame_id) + 1];
-    strcpy(frame_id, msg.frame_id);
+    if (msg.frame_id == 0)
+    {
+      frame_id = new char[1];
+      frame_id[0] = '\0';
+    }
+    else
+    {
+      frame_id = new char[strlen(msg.frame_id) + 1];
+      strcpy(frame_id, msg.frame_id);
+    }
   }
   ~rosgraph_msgs_Header()
   {
@@ -32,8 +36,16 @@ struct rosgraph_msgs_Header
     if (frame_id != 0)
       delete[] frame_id;
 
-    frame_id = new char[strlen(msg.frame_id) + 1];
-    strcpy(frame_id, msg.frame_id);
+    if (msg.frame_id == 0)
+    {
+      frame_id = new char[1];
+      frame_id[0] = '\0';
+    }
+    else
+    {
+      frame_id = new char[strlen(msg.frame_id) + 1];
+      strcpy(frame_id, msg.frame_id);
+    }
 
     return *this;
   }

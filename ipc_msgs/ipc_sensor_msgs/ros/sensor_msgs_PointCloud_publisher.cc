@@ -10,17 +10,33 @@
 ipc_bridge::Publisher<ipc_bridge::NAMESPACE::NAME> *p;
 ipc_bridge::NAMESPACE::NAME out_msg;
 
-unsigned int frame_id_prior_size = 0;
-
 void callback(const NAMESPACE::NAME::ConstPtr &msg)
-{  
+{
   out_msg.header.seq = msg->header.seq;
   out_msg.header.stamp = msg->header.stamp.toSec();
 
-  // TODO: Implement
-  ROS_WARN("%s: not fully implemented", 
-           ros::this_node::getName().c_str());
+  if (out_msg.header.frame_id != 0)
+    delete[] out_msg.header.frame_id;
+
+  out_msg.header.frame_id =
+    new char[strlen(msg->header.frame_id.c_str()) + 1];
+  strcpy(out_msg.header.frame_id, msg->header.frame_id.c_str());
+
+  out_msg.points_length = msg->points.size();
+  out_msg.points = new geometry_msgs_Point32[out_msg.points_length];
+
+  for (unsigned int i = 0; i < out_msg.points_length; i++)
+    {
+      out_msg.points[i].x = msg->points[i].x;
+      out_msg.points[i].y = msg->points[i].y;
+      out_msg.points[i].z = msg->points[i].z;
+    }
 
   p->Publish(out_msg);
+
+  if (out_msg.points != 0)
+    delete [] out_msg.points;
+
+  out_msg.points = 0;
 }
 #include "publisher.h"

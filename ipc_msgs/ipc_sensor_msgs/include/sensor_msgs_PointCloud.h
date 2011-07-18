@@ -5,7 +5,6 @@
 
 #include <rosgraph_msgs_Header.h>
 #include <geometry_msgs_Point32.h>
-#include <sensor_msgs_ChannelFloat32.h>
 
 namespace ipc_bridge_matlab
 {
@@ -16,8 +15,7 @@ namespace ipc_bridge_matlab
       static mxArray* ProcessMessage(const ipc_bridge::sensor_msgs::PointCloud &msg)
       {
         const char *fields[] = {"header",
-                                "points",
-                                "channels"};
+                                "points"};
         const int nfields = sizeof(fields)/sizeof(*fields);
         mxArray *out = mxCreateStructMatrix(1, 1, nfields, fields);
 
@@ -31,13 +29,6 @@ namespace ipc_bridge_matlab
                     ipc_bridge_matlab::geometry_msgs::Point32::ProcessMessage(msg.points[i]));
         mxSetField(out, 0, "points", points);
 
-        const int length2 = msg.channels_length;
-        mxArray *channels = mxCreateCellArray(1, &length2);
-        for (unsigned int i = 0; i < length; i++)
-          mxSetCell(channels, i,
-                    ipc_bridge_matlab::sensor_msgs::ChannelFloat32::ProcessMessage(msg.channels[i]));
-        mxSetField(out, 0, "channels", channels);
-
         return out;
       }
 
@@ -47,7 +38,7 @@ namespace ipc_bridge_matlab
 
         field = mxGetField(a, 0, "header");
         ipc_bridge_matlab::Header::ProcessArray(field, msg.header);
-#if 0
+
         field = mxGetField(a, 0, "points");
         int nrows = mxGetM(field);
         int ncols = mxGetN(field);
@@ -73,32 +64,6 @@ namespace ipc_bridge_matlab
               }
           }
 
-        field = mxGetField(a, 0, "channels");
-        nrows = mxGetM(field);
-        ncols = mxGetN(field);
-
-        length = nrows;
-        if (nrows < ncols)
-          length = ncols;
-        msg.channels_length = length;
-
-        if ((ncols == 0) || (nrows == 0))
-          {
-            msg.channels_length = 0;
-            msg.channels = 0;
-          }
-
-        if (msg.channels_length > 0)
-          {
-            msg.channels = new sensor_msgs_ChannelFloat32[msg.channels_length];
-            for (unsigned int i = 0; i < msg.channels_length; i++)
-              {
-                mxArray *p = mxGetCell(field, i);
-                ipc_bridge_matlab::sensor_msgs::ChannelFloat32::ProcessArray(p, msg.channels[i]);
-              }
-          }
-#endif
-
         return SUCCESS;
       }
 
@@ -113,15 +78,6 @@ namespace ipc_bridge_matlab
             delete[] msg.points;
             msg.points_length = 0;
             msg.points = 0;
-          }
-
-        for (unsigned int i = 0; i < msg.channels_length; i++)
-          ipc_bridge_matlab::sensor_msgs::ChannelFloat32::Cleanup(msg.channels[i]);
-        if (msg.channels != 0)
-          {
-            delete[] msg.channels;
-            msg.channels_length = 0;
-            msg.channels = 0;
           }
       }
     }
