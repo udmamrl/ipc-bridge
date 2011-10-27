@@ -9,7 +9,7 @@ classdef ipc_ros < handle
 
     methods;
         function obj = ipc_ros(package_, type_, name_, mode_)
-            [a, p] = system(sprintf('rospack find %s', package_));
+            [a, p] = system(sprintf('/bin/bash -l -c ''rospack find %s''', package_));
             addpath(strcat(p, '/bin'));
 
             if exist(strcat(p, '/ipc/bin')) == 7
