@@ -8,4 +8,4 @@ ROS_LIBS = $(foreach lib, $(shell rospack libs-only-l roscpp), -l$(lib))
 ros: $(ROS_FILES)
 
 %: ros/%.cc
-	$(CXX) -I./include $(ROS_CXXFLAGS) $(IPC_BRIDGE_CXXFLAGS) -lstdc++ $(IPC_LFLAGS) -lipc $(ROS_LFLAGS) $(ROS_LIBS) $^ -o bin/$@
+	$(CXX) $(CXXFLAGS) -I./include $(ROS_CXXFLAGS) $(IPC_BRIDGE_CXXFLAGS) $^ -lstdc++ $(IPC_LFLAGS) -lipc $(ROS_LFLAGS) $(ROS_LIBS) -o bin/$@

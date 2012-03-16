@@ -4,4 +4,4 @@ MATLAB_CXXFLAGS += $(foreach path, $(shell rospack cflags-only-I ipc_bridge_matl
 mex: $(MEX_FILES)
 
 %: mex/%.cc
-	$(MEX) -I./include $(MATLAB_CXXFLAGS) $(IPC_BRIDGE_CXXFLAGS) -lstdc++ $(IPC_LFLAGS) -lipc $^ -output bin/$@
+	$(MEX) -I./include $(MATLAB_CXXFLAGS) $(IPC_BRIDGE_CXXFLAGS) $^ -lstdc++ $(IPC_LFLAGS) -lipc -output bin/$@
