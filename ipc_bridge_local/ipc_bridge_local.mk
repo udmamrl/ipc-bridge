@@ -1,6 +1,8 @@
 .PHONY= all prep clean
 .DEFAULT_GOAL=all
 
+CXXFLAGS += -O2 -Wall
+
 all: prep xdr mex ros
 
 include $(shell rospack find ipc_bridge)/ipc_bridge.mk

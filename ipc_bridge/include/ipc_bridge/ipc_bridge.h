@@ -46,7 +46,7 @@ namespace ipc_bridge
       server_name = server_name_;
     }
 
-    int BaseConnect()
+    int BaseConnect(bool noListen)
     {
       if (connected)
         {
@@ -60,12 +60,24 @@ namespace ipc_bridge
           return -1;
         }
 
-      if (IPC_connectModule((const char*)module_name.c_str(),
-                            (const char*)server_name.c_str()) != IPC_OK)
+      if(!noListen)
+      {
+        if (IPC_connectModule((const char*)module_name.c_str(),
+              (const char*)server_name.c_str()) != IPC_OK)
         {
           printf("%s: Failed to connect\n", module_name.c_str());
           return -1;
         }
+      }
+      else
+      {
+        if (IPC_connectModuleNoListen((const char*)module_name.c_str(),
+              (const char*)server_name.c_str()) != IPC_OK)
+        {
+          printf("%s: Failed to connect\n", module_name.c_str());
+          return -1;
+        }
+      }
 
       if (IPC_isConnected() != 1)
         {
@@ -134,7 +146,7 @@ namespace ipc_bridge
 
     int Connect()
     {
-      if (this->BaseConnect() != 0)
+      if (this->BaseConnect(true) != 0)
         return -1;
 
       if (IPC_isMsgDefined((const char*)message_name.c_str()) == 0)
@@ -256,7 +268,7 @@ namespace ipc_bridge
 
     int Connect()
     {
-      if (this->BaseConnect() != 0)
+      if (this->BaseConnect(false) != 0)
         return -1;
 
       if (IPC_subscribeData((const char*)message_name.c_str(),
