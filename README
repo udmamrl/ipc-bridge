@@ -1,3 +1,11 @@
 Requires IPC v3.9.x or higher:
 
 http://www.cs.cmu.edu/~IPC/
+
+You will need to set up the ROS paths appropriately. 
+
+You will also need to set the MEX variable in your environment:
+
+export MEX=/path/to/matlab/bin/mex
+
+This will vary based on your system, install path, etc.
