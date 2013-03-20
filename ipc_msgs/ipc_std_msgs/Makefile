@@ -1,6 +1,6 @@
 PKG= ipc_std_msgs
-MEX_MSGS= Bool
-ROS_MSGS= Bool
+MEX_MSGS= Bool String
+ROS_MSGS= Bool String
 
 MEX_FILES := $(foreach msg, $(MEX_MSGS), std_msgs_$(msg))
 ROS_FILES := $(foreach msg, $(ROS_MSGS), std_msgs_$(msg)_publisher)

@@ -1,0 +1,57 @@
+%{
+#include <cstring>
+%}
+
+struct std_msgs_String
+{
+  string data<>;
+%{
+  std_msgs_String() : data(0) {}
+  std_msgs_String(const std_msgs_String& msg)
+  {
+    if (msg.data == 0)
+    {
+      data = new char[1];
+      data[0] = '\0';
+    }
+    else
+    {
+      data = new char[strlen(msg.data) + 1];
+      strcpy(data, msg.data);
+    }
+  }
+  ~std_msgs_String()
+  {
+    if (data != 0)
+      delete[] data;
+  }
+  std_msgs_String& operator= (const std_msgs_String& msg)
+  {
+    if (data != 0)
+      delete[] data;
+
+    if (msg.data == 0)
+    {
+      data = new char[1];
+      data[0] = '\0';
+    }
+    else
+    {
+      data = new char[strlen(msg.data) + 1];
+      strcpy(data, msg.data);
+    }
+
+    return *this;
+  }
+%}
+};
+
+%{
+namespace ipc_bridge
+{
+    namespace std_msgs
+    {
+        typedef std_msgs_String String;
+    }
+}
+%}
