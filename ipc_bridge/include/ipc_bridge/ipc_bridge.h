@@ -9,7 +9,7 @@
 
 namespace ipc_bridge
 {
-  static double GetTimeDouble()
+  static inline double GetTimeDouble()
   {
     struct timeval ts;
     gettimeofday(&ts,0);
