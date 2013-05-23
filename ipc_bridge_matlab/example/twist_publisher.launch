@@ -1,0 +1,9 @@
+<launch>
+
+
+  <node pkg="ipc_geometry_msgs"    name="ipc_Twist_node"    type="geometry_msgs_Twist_subscriber"   output="screen">
+    <remap from="~topic"     to="/cmd_vel"/>
+    <param name="message" value="twist" />
+  </node>
+
+</launch>
