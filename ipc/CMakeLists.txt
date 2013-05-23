@@ -29,3 +29,4 @@ rosbuild_add_library(ipc ${IPC}/src/ipc.c ${IPC}/src/queryResponse.c ${IPC}/src/
 rosbuild_add_executable(central ${IPC}/src/comServer.c ${IPC}/src/dispatch.c ${IPC}/src/msgTap.c ${IPC}/src/recvMsg.c ${IPC}/src/res.c ${IPC}/src/tcerror.c ${IPC}/src/logging.c ${IPC}/src/globalS.c ${IPC}/src/centralIO.c ${IPC}/src/globalVar.c ${IPC}/src/centralMain.c)
 target_link_libraries(central ipc)
 
+# TODO add rosbuild_add_executable for xdrgen and copy ipc.h
