@@ -2,13 +2,12 @@ classdef ipc_ros < handle
     %ipc_ros class for ipc-bridge-matlab
     %     
     % obj = ipc_ros(package_, type_, name_, mode_)
-    %
-    % package_ : 
-    %     ipc_std_msgs 
-    %     ipc_sensor_msgs 
-    %     ipc_nav_msgs 
-    %     ipc_geometry_msgs 
-    %     ipc_rosgraph_msgs
+    % package_ 
+    %         ipc_std_msgs 
+    %         ipc_sensor_msgs 
+    %         ipc_nav_msgs 
+    %         ipc_geometry_msgs 
+    %         ipc_rosgraph_msgs
     % type_
     %         geometry_msgs_Point
     %         geometry_msgs_Point32
@@ -39,12 +38,10 @@ classdef ipc_ros < handle
     %         sensor_msgs_PointCloud
     %         std_msgs_Bool
     %         std_msgs_String
-    %
     % name_ 
     %        also the message parameter's value in launch file
     %        example
-    %        <param name="message" value="image" />
-    %        
+    %        <param name="message" value="image" />       
     %         ipc_geometry_msgs : point
     %         ipc_geometry_msgs : point32
     %         ipc_geometry_msgs : pointstamped
@@ -74,7 +71,6 @@ classdef ipc_ros < handle
     %         ipc_sensor_msgs   : pointcloud
     %         ipc_std_msgs      : bool
     %         ipc_std_msgs      : string
-    %
     % mode_
     %         'publisher'
     %         'subscriber'
