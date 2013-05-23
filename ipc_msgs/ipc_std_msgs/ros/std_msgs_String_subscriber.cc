@@ -12,7 +12,12 @@ NAMESPACE::NAME out_msg;
 
 void callback(const ipc_bridge::NAMESPACE::NAME &msg)
 {
-  out_msg.data = std::string(msg.data);
+
+  //out_msg.data = std::string(msg.data);
+  if (msg.data != 0)
+    out_msg.data = std::string(msg.data);
+  else
+    out_msg.data = std::string("");
 
   pub.publish(out_msg);
 }
