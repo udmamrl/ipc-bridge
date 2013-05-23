@@ -16,6 +16,8 @@ mkdir ../include
 cp -fv bin/Linux-3.2/xdrgen ../bin/.
 cp -fv include/ipc.h ../include/.
 
+# have to do make clean to remove  extra central excuable file
+make clean
 #
 echo "run rosmake ipc to generate libipc.so and central"
 
