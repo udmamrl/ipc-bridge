@@ -1,6 +1,6 @@
-Requires IPC v3.9.x or higher:
+IPC-Bridge udmamrl/ipc-bridge forked from nmichael/ipc-bridge
 
-http://www.cs.cmu.edu/~IPC/
+    Include IPC v3.9.1 ros package from http://www.cs.cmu.edu/~IPC/
 
 You will need to set up the ROS paths appropriately. 
 
@@ -9,3 +9,23 @@ You will also need to set the MEX variable in your environment:
 export MEX=/path/to/matlab/bin/mex
 
 This will vary based on your system, install path, etc.
+
+
+example installation using rosws , tested in Ubuntu 12.04 x64 
+
+    cd ~/ros
+    rosws set ipc-bridge --version=master --git https://github.com/udmamrl/ipc-bridge.git
+    source ~/ros/setup.sh
+    rosws update ipc-bridge
+
+    # Compile ipc ipc-3.9.1
+    # Run ipc_make.sh will do make twice then copy ipc.h and xdrgen
+    # Then in the end of the script it will run rosmake ipc to generate libipc.a libipc.so central
+   
+    roscd ipc && ./ipc_make.sh
+    
+    # Then run easy make script for all messages, you have to hit enter for each message. 
+    # Make sure you have  0 failures when making each messages.
+    
+    roscd ipc_msgs  && ./ipc_msgs_make_all.sh
+    
