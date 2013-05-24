@@ -14,8 +14,18 @@ void callback(const ipc_bridge::NAMESPACE::NAME &msg)
 { 
   out_msg.header.seq = msg.header.seq;
   out_msg.header.stamp = ros::Time(msg.header.stamp);
-  out_msg.header.frame_id = std::string(msg.header.frame_id);
-  out_msg.child_frame_id = std::string(msg.child_frame_id);
+  
+  if (msg.header.frame_id != 0)
+    out_msg.header.frame_id = std::string(msg.header.frame_id);
+  else
+    out_msg.header.frame_id = std::string("");
+  
+  if (msg.child_frame_id != 0)
+    out_msg.child_frame_id = std::string(msg.child_frame_id);
+  else
+    out_msg.child_frame_id = std::string("");
+  
+  
   out_msg.pose.pose.position.x = msg.pose.pose.position.x;
   out_msg.pose.pose.position.y = msg.pose.pose.position.y;
   out_msg.pose.pose.position.z = msg.pose.pose.position.z;
